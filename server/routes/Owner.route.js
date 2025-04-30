@@ -2,9 +2,8 @@
 
 const express = require("express");
 const router = express.Router();
-const { createTenantByOwner } = require("../controllers/Owner.server");
+const { createTenantByOwner } = require("../Service/Owner.service");
 
-// Route to create a new tenant by owner
 router.post("/createtenant", createTenantByOwner);
 
 module.exports = router;

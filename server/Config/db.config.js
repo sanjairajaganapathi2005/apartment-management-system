@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Backend_URL = process.env.MONGODB_URL ;
 function connectDb(){
-    mongoose.connect(`${Backend_URL}`)
+    mongoose.connect(`${Backend_URL}apartment`)
     .then(() => {
         console.log("connected MongoDB");
     })
