@@ -9,3 +9,4 @@ const ComplaintSchema = new mongoose.Schema({
   
   module.exports = mongoose.model('Complaint', ComplaintSchema);
   
+  
