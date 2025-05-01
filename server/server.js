@@ -7,7 +7,8 @@ const connectDb = require('./Config/db.config');
 
 // Routes
 const ownerRoutes = require('./routes/Owner.route');
-const complaintRoutes = require('./routes/Complaint.route'); // Complaint routes
+const complaintRoutes = require('./routes/Complaint.route'); 
+const employeeRoutes = require("./routes/Employee.route");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,7 +22,13 @@ connectDb();
 
 // API Routes
 app.use("/api/owner", ownerRoutes);
-app.use("/api/complaint", complaintRoutes); // Complaint API route
+app.use("/api/complaint", complaintRoutes);
+app.use("/employee", employeeRoutes);
+
+// 404 handler
+app.use((req, res, next) => {
+  res.status(404).json({ error: "Route not found" });
+});
 
 // Default Route
 app.get("/", (req, res) => {
@@ -30,5 +37,5 @@ app.get("/", (req, res) => {
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
