@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const connectDb = require('./Config/db.config');
-
+const adminrouter = require('./routes/Admin.route');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,7 +15,7 @@ app.use(cors())
 
 // Connect to MongoDB
 connectDb();
-
+app.use('/admin',adminrouter);
 // Routes
 
 

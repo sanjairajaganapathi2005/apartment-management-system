@@ -1,8 +1,10 @@
+const mongoose = require('mongoose');
 const OwnerSchema = new mongoose.Schema({
     ownerId: { type: String, required: true, unique: true },
-    name: String,
-    age: Number,
-    agreementStatus: String,
+    name: {type: String , required : true},
+    password: {type:String,required:true},
+    email: {type: String, required:true, unique:true},
+    phone: {type: String },
     roomNo: String,
     dob: Date,
     adhaar: String
