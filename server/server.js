@@ -1,49 +1,28 @@
-// server.js
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const bodyParser = require("body-parser");
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
 
-// Load environment variables
-dotenv.config();
+// MongoDB connection
+const connectDb = require('./Config/db.config');
 
 // Routes
-const ownerRoutes = require("./routes/Owner.route");
+const ownerRoutes = require('./routes/Owner.route');
+const complaintRoutes = require('./routes/Complaint.route'); 
 const employeeRoutes = require("./routes/Employee.route");
 
 const app = express();
-const PORT = process.env.PORT || 5555;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
-app.use(express.json());
-
-// Request logger
-app.use((req, res, next) => {
-  console.log(`[${req.method}] ${req.url}`);
-  next();
-});
+app.use(express.json()); // Use built-in JSON parser instead of body-parser
 
 // Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URL + "apartment", {
-    // Use MONGODB_URL instead
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+connectDb();
 
-console.log("Loaded MONGODB_URI:", process.env.MONGODB_URI);
-
-// Routes
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
-
+// API Routes
 app.use("/api/owner", ownerRoutes);
+app.use("/api/complaint", complaintRoutes);
 app.use("/employee", employeeRoutes);
 
 // 404 handler
@@ -51,13 +30,12 @@ app.use((req, res, next) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-// Global error handler
-app.use((err, req, res, next) => {
-  console.error("Error Middleware:", err.stack);
-  res.status(500).json({ error: "Internal Server Error" });
+// Default Route
+app.get("/", (req, res) => {
+  res.send("Apartment Management Server is running.");
 });
 
-// Start server
+// Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
