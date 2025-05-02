@@ -5,11 +5,6 @@ require('dotenv').config();
 // MongoDB connection
 const connectDb = require('./Config/db.config');
 
-// Routes
-const ownerRoutes = require('./routes/Owner.route');
-const complaintRoutes = require('./routes/Complaint.route'); 
-const employeeRoutes = require("./routes/Employee.route");
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -20,10 +15,7 @@ app.use(express.json()); // Use built-in JSON parser instead of body-parser
 // Connect to MongoDB
 connectDb();
 
-// API Routes
-app.use("/api/owner", ownerRoutes);
-app.use("/api/complaint", complaintRoutes);
-app.use("/employee", employeeRoutes);
+// Routes
 
 // 404 handler
 app.use((req, res, next) => {
