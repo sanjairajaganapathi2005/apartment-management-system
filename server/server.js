@@ -16,6 +16,18 @@ app.use(express.json()); // Use built-in JSON parser instead of body-parser
 connectDb();
 
 // Routes
+const owner = require('./routes/owner.routes');
+const complaint = require('./routes/Complaint.routes');
+const admin = require('./routes/Admin.routes');
+const authRoutes = require('./routes/Auth.routes');
+const employee = require('./routes/Employee.routes');
+
+
+app.use('/admin', admin);
+app.use('/auth', authRoutes);
+app.use('/complaint', complaint);
+app.use('/employee', employee);
+app.use('/owner', owner);
 
 // 404 handler
 app.use((req, res, next) => {
