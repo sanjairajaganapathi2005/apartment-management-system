@@ -3,11 +3,11 @@ const Tenant = require("../models/Tenant.model");
 // CREATE Tenant
 const addTenant = async (req, res) => {
   try {
-    const { tenantId, name, dob, roomNo, age, adhaar } = req.body;
+    const { tenantId, name, dob, adhaar, agreement, status, blockNo } = req.body;
 
     // Validation
-    if (!tenantId || !name || !dob || !roomNo || !age || !adhaar) {
-      return res.status(400).json({ error: "All fields are required." });
+    if (!tenantId || !name || !dob || !adhaar || !agreement || !blockNo) {
+      return res.status(400).json({ error: "All required fields must be filled." });
     }
 
     // Check for duplicates
@@ -19,7 +19,7 @@ const addTenant = async (req, res) => {
     }
 
     // Create and save
-    const tenant = new Tenant({ tenantId, name, dob, roomNo, age, adhaar });
+    const tenant = new Tenant({ tenantId, name, dob, adhaar, agreement, status, blockNo });
     await tenant.save();
 
     res.status(201).json({ message: "Tenant added successfully", tenant });
@@ -41,9 +41,9 @@ const getAllTenants = async (req, res) => {
 // UPDATE Tenant
 const updateTenant = async (req, res) => {
   try {
-    console.log("Update request for tenantId:", req.params.id);  // Add this line
+    console.log("Update request for tenantId:", req.params.id);
     const tenant = await Tenant.findOneAndUpdate(
-      { tenantId: req.params.id },  // Ensure tenantId is correct
+      { tenantId: req.params.id },
       req.body,
       { new: true, runValidators: true }
     );
@@ -61,7 +61,7 @@ const updateTenant = async (req, res) => {
 // DELETE Tenant
 const deleteTenant = async (req, res) => {
   try {
-    console.log("Delete request for tenantId:", req.params.id);  // Add this line
+    console.log("Delete request for tenantId:", req.params.id);
     const result = await Tenant.findOneAndDelete({ tenantId: req.params.id });
 
     if (!result) {
@@ -73,7 +73,6 @@ const deleteTenant = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 module.exports = {
   addTenant,
