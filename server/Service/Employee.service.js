@@ -1,9 +1,9 @@
-const Employee = require("../models/employee");
+const Employee = require("../models/employee.model.js");
 
 // CREATE
 exports.registerEmployee = async (req, res) => {
   try {
-    console.log("Received data:", req.body); // <-- add this
+    console.log("Received data:", req.body);
     const employee = new Employee(req.body);
     await employee.save();
     res

@@ -1,13 +1,13 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
 // MongoDB connection
-const connectDb = require('./Config/db.config');
+const connectDb = require("./Config/db.config");
 
 // Routes
-const ownerRoutes = require('./routes/Owner.route');
-const complaintRoutes = require('./routes/Complaint.route'); 
+const ownerRoutes = require("./routes/Owner.route");
+const complaintRoutes = require("./routes/Complaint.route");
 const employeeRoutes = require("./routes/Employee.route");
 
 const app = express();
@@ -23,7 +23,7 @@ connectDb();
 // API Routes
 app.use("/api/owner", ownerRoutes);
 app.use("/api/complaint", complaintRoutes);
-app.use("/employee", employeeRoutes);
+app.use("/api/employee", employeeRoutes);
 
 // 404 handler
 app.use((req, res, next) => {
