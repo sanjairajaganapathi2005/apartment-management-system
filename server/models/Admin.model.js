@@ -9,6 +9,8 @@ const AdminSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        lowercase: true,
+        trim: true
     },
     password: {
         type: String,
@@ -17,8 +19,9 @@ const AdminSchema = new mongoose.Schema({
     role: {
         type: String,
         default: 'admin',
-    },
+    }
+}, {
+    timestamps: true
+});
 
-})
-const Admin = mongoose.model('Admin', AdminSchema);
-module.exports = Admin;
+module.exports = mongoose.model('Admin', AdminSchema);

@@ -5,25 +5,28 @@ require("dotenv").config();
 // MongoDB connection
 const connectDb = require("./Config/db.config");
 
-// Routes
-const ownerRoutes = require("./routes/Owner.route");
-const complaintRoutes = require("./routes/Complaint.route");
-const employeeRoutes = require("./routes/Employee.route");
+const owner = require('./routes/owner.routes');
+const complaint = require('./routes/Complaint.routes');
+const admin = require('./routes/Admin.routes');
+const authRoutes = require('./routes/Auth.routes');
+const employee = require('./routes/Employee.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Use built-in JSON parser instead of body-parser
+app.use(express.json());
 
 // Connect to MongoDB
 connectDb();
 
-// API Routes
-app.use("/api/owner", ownerRoutes);
-app.use("/api/complaint", complaintRoutes);
-app.use("/api/employee", employeeRoutes);
+// Routes
+app.use('/admin', admin);
+app.use('/auth', authRoutes);
+app.use('/complaint', complaint);
+app.use('/employee', employee);
+app.use('/owner', owner);
 
 // 404 handler
 app.use((req, res, next) => {
