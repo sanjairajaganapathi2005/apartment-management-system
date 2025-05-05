@@ -5,7 +5,7 @@ const {
   getAllTenants,
   updateTenant,
   deleteTenant
-} = require("../Service/Owner.service"); // ✅ Fixed path
+} = require("../Service/Owner.service");
 
 // Add tenant
 router.post("/createtenant", addTenant);
