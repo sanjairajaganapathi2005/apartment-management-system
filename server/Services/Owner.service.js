@@ -1,5 +1,5 @@
 const Tenant = require("../models/Tenant.model");
-const User = require("../models/User.model");
+const User = require("../models/users.model");
 
 const createTenantByOwner = async (req, res) => {
   try {
