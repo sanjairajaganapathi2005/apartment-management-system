@@ -1,28 +1,23 @@
 const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user'); 
+const {
+    registerUser,
+    loginUser,
+    requestOtp,
+    requestResetPassword,
+    resetPassword,
+} = require('../controllers/auth.controller');
 
-router.post('/auth', async (req, res) => {
-  try {
-    const { username, password } = req.body;
+const authRouter = express.Router();
 
-    if (!username || !password)
-      return res.status(400).send('username and password are required');
+// 📌 Authentication Routes
+authRouter.post('/register', registerUser);         // Registration using verified OTP
+authRouter.post('/login', loginUser);               // Login with email/password
 
-    const user = await User.findOne({ username });
-    if (!user) return res.status(404).send("User not found");
+// 📌 OTP Handling
+authRouter.post('/request-otp', requestOtp);        // Request OTP for registration
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(404).send("Invalid credentials");
+// 📌 Password Reset Flow
+authRouter.post('/request-reset-password', requestResetPassword); // Send OTP to reset password
+authRouter.put('/reset-password', resetPassword);                 // Reset password with verified OTP
 
-    const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '12hr' });
-
-    res.status(200).send({ message: "Login successful", token });
-  } catch (err) {
-    res.status(500).send("Internal Server Error");
-  }
-});
-
-module.exports = router;
+module.exports = authRouter;

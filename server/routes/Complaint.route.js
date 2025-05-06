@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { raiseComplaint, getComplaints } = require("../Service/Complaint.service");
+const { raiseComplaint, getComplaints } = require("../Services/Complaint.service");
 
 // Route to raise a complaint
 router.post("/raise", raiseComplaint);

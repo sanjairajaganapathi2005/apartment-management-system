@@ -1,7 +1,7 @@
 const Tenant = require("../models/Tenant.model");
+const User = require("../models/users.model");
 
-// CREATE Tenant
-const addTenant = async (req, res) => {
+const createTenantByOwner = async (req, res) => {
   try {
     const { tenantId, name, dob, adhaar, agreement, status, blockNo } = req.body;
 
