@@ -1,9 +1,17 @@
-// routes/Owner.route.js
-
 const express = require("express");
 const router = express.Router();
 const { createTenantByOwner } = require("../Services/Owner.service");
 
-router.post("/createtenant", createTenantByOwner);
+// Add tenant
+router.post("/createtenant", addTenant);
+
+// Get all tenants
+router.get("/tenants", getAllTenants);
+
+// Update tenant
+router.put("/updatetenant/:id", updateTenant);
+
+// Delete tenant
+router.delete("/deletetenant/:id", deleteTenant);
 
 module.exports = router;

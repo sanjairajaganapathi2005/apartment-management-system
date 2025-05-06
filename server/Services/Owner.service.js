@@ -3,53 +3,80 @@ const User = require("../models/users.model");
 
 const createTenantByOwner = async (req, res) => {
   try {
-    const { name, age, tenantno, adhaar, roomno, password, dob } = req.body;
+    const { tenantId, name, dob, adhaar, agreement, status, blockNo } = req.body;
 
-    // Basic validation
-    if (!tenantno || !name || !dob || !roomno || !password) {
-      return res.status(400).json({ error: "Missing required fields" });
+    // Validation
+    if (!tenantId || !name || !dob || !adhaar || !agreement || !blockNo) {
+      return res.status(400).json({ error: "All required fields must be filled." });
     }
 
-    // Check if tenant already exists
-    const existingTenant = await Tenant.findOne({ tenantno });
+    // Check for duplicates
+    const existingTenant = await Tenant.findOne({
+      $or: [{ tenantId }, { adhaar }]
+    });
     if (existingTenant) {
-      return res.status(409).json({ error: "Tenant number already exists" });
+      return res.status(409).json({ error: "Tenant with same ID or Aadhaar already exists." });
     }
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ email: `t-${tenantno}` });
-    if (existingUser) {
-      return res.status(409).json({ error: "User already exists" });
-    }
+    // Create and save
+    const tenant = new Tenant({ tenantId, name, dob, adhaar, agreement, status, blockNo });
+    await tenant.save();
 
-    // Create and save tenant
-    const newTenant = new Tenant({
-      tenantno,
-      name,
-      dob,
-      roomNo: roomno,
-      age,
-      adhaar
-    });
-    await newTenant.save();
-
-    // Create and save user
-    const newUser = new User({
-      email: `t-${tenantno}`,
-      password,
-      referenceId: tenantno,
-      role: "tenant"
-    });
-    await newUser.save();
-
-    res.status(200).json({ message: "Tenant registered successfully" });
-
+    res.status(201).json({ message: "Tenant added successfully", tenant });
   } catch (err) {
-    console.error("Error during tenant registration:", err);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// READ All Tenants
+const getAllTenants = async (req, res) => {
+  try {
+    const tenants = await Tenant.find();
+    res.status(200).json(tenants);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// UPDATE Tenant
+const updateTenant = async (req, res) => {
+  try {
+    console.log("Update request for tenantId:", req.params.id);
+    const tenant = await Tenant.findOneAndUpdate(
+      { tenantId: req.params.id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!tenant) {
+      return res.status(404).json({ error: "Tenant not found" });
+    }
+
+    res.json({ message: "Tenant updated successfully", tenant });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// DELETE Tenant
+const deleteTenant = async (req, res) => {
+  try {
+    console.log("Delete request for tenantId:", req.params.id);
+    const result = await Tenant.findOneAndDelete({ tenantId: req.params.id });
+
+    if (!result) {
+      return res.status(404).json({ error: "Tenant not found" });
+    }
+
+    res.json({ message: "Tenant deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
 module.exports = {
-  createTenantByOwner
+  addTenant,
+  getAllTenants,
+  updateTenant,
+  deleteTenant
 };
