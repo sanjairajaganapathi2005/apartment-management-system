@@ -3,18 +3,21 @@ const {
     registerUser,
     loginUser,
     requestOtp,
-    verifyOtp,
     requestResetPassword,
     resetPassword,
 } = require('../controllers/auth.controller');
 
 const authRouter = express.Router();
 
-authRouter.post('/register', registerUser);
-authRouter.post('/login', loginUser);
-authRouter.post('/request-otp', requestOtp);
-authRouter.post('/verify-otp', verifyOtp);
-authRouter.post('/request-reset-password', requestResetPassword);
-authRouter.put('/reset-password', resetPassword);
+// 📌 Authentication Routes
+authRouter.post('/register', registerUser);         // Registration using verified OTP
+authRouter.post('/login', loginUser);               // Login with email/password
 
-module.exports = authRouter;  // Corrected export statement
+// 📌 OTP Handling
+authRouter.post('/request-otp', requestOtp);        // Request OTP for registration
+
+// 📌 Password Reset Flow
+authRouter.post('/request-reset-password', requestResetPassword); // Send OTP to reset password
+authRouter.put('/reset-password', resetPassword);                 // Reset password with verified OTP
+
+module.exports = authRouter;
