@@ -1,4 +1,5 @@
 const AdminService = require('../Service/Admin.service');
+const bcrypt = require('bcryptjs');
 
 exports.adminLogin = async (req, res) => {
     try {
@@ -58,7 +59,6 @@ exports.registerAdmin = async (req, res) => {
     }
 };
 
-const bcrypt = require('bcryptjs');
 exports.registerOwner = async (req, res) => {
     try {
         const { ownerId, name, email, password, phone, roomNo, dob, adhaar } = req.body;
