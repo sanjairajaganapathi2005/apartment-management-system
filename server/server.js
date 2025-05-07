@@ -1,15 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
-// MongoDB connection
-const connectDb = require("./Config/db.config");
+const connectDb = require("./Config/db.config"); // MongoDB connection
 
 // Routes
 const ownerRoutes = require('./routes/tenant.route');
 const complaintRoutes = require('./routes/Complaint.route');
 const authRoutes = require('./routes/Auth.route'); // ✅ Auth route added
-
+const ownerRoutes = require('./routes/Owner.route');
+const tenantRoutes = require('./routes/Tenant.route'); // ✅ Tenant route added
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -22,14 +21,18 @@ app.use(express.json());
 connectDb();
 
 // API Routes
-app.use("/api/owner", ownerRoutes);
-app.use("/api/complaint", complaintRoutes);
-app.use("/api/auth", authRoutes); // ✅ Auth route registered
+app.use("/owner", ownerRoutes);
+app.use("/complaint", complaintRoutes);
+app.use("/auth", authRoutes); 
+app.use("/owner", ownerRoutes);
+app.use("/tenant", tenantRoutes); 
+
 
 // Default Route
 app.get("/", (req, res) => {
   res.send("🏢 Apartment Management Server is running.");
 });
+
 
 // Start Server
 app.listen(PORT, () => {
