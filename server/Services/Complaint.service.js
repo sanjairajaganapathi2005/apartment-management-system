@@ -30,7 +30,6 @@ const raiseComplaint = async (req, res) => {
   }
 };
 
-// GET /api/complaint or /api/complaint?complaintId=xyz
 const getComplaints = async (req, res) => {
   try {
     const { complaintId } = req.query;

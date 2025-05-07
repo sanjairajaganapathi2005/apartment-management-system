@@ -1,5 +1,5 @@
 const OwnerModel = require('../models/owner.model');
-const usersService = require('./users.service');
+const usersService = require('./User.service');
 class OwnerService {
     async registerOwner(email, password) {
         await usersService.registerUser(email, password);

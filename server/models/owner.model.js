@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const OwnerSchema = new mongoose.Schema({
     ownerId: { type: String, required: true, unique: true },
     name: {type: String , required : true},
-    password: {type:String,required:true},
     email: {type: String, required:true, unique:true, ref: 'User'},
     phone: {type: String },
     roomNo: String,
@@ -11,5 +10,5 @@ const OwnerSchema = new mongoose.Schema({
 
   });
   
-  module.exports = mongoose.model('Owner', OwnerSchema);
+module.exports = mongoose.model('Owner', OwnerSchema);
   

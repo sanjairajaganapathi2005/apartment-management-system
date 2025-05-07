@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const ComplaintSchema = new mongoose.Schema({
-  complaintId: { type: String, required: true, unique: true }, // Explicit Complaint ID
+  complaintId: { type: String, required: true, unique: true }, 
   raisedBy: {
     email: { type: String, required: true },
     name: { type: String, required: true }
   },
-  dept: { type: String, required: true }, // Department the complaint is related to
+  dept: { type: String, required: true }, 
   description: { type: String, required: true },
   blockNo: { type: String, required: true },
   roomNo: { type: String, required: true },

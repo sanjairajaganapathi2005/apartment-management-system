@@ -4,7 +4,6 @@ require("dotenv").config();
 const connectDb = require("./Config/db.config"); // MongoDB connection
 
 // Routes
-const tenantRoutes = require('./routes/Tenant.route');
 const complaintRoutes = require('./routes/Complaint.route');
 const authRoutes = require('./routes/Auth.route');
 const ownerRoutes = require('./routes/Owner.route');
@@ -31,6 +30,7 @@ app.use("/employee", employeeRoutes);
 app.use("/auth", userRouter); 
 app.use("/admin", adminRoutes);
 app.use("/tenant", tenantRoutes); 
+app.use("/owner", ownerRoutes);
 
 // Default Route
 app.get("/", (req, res) => {

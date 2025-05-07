@@ -1,10 +1,9 @@
 const express = require('express');
-const { updateOwnerDetails, getAllOwners, deleteOwner } = require('../Services/Owner.service');
-const { getOwnerDetails } = require('../Controllers/Owner.controller');
+const { updateOwnerDetails, getAllOwners, deleteOwner, findOwnerDetails } = require('../Services/Owner.service');
 const ownerrouter = express.Router();
 
 ownerrouter.post('/update/:id',updateOwnerDetails);
-ownertoutes.get('/get/:id',getOwnerDetails);
+ownerrouter.get('/get/:id',findOwnerDetails);
 ownerrouter.get('/getall',getAllOwners);
 ownerrouter.delete('/delete/:id',deleteOwner);
 
