@@ -1,9 +1,9 @@
-const OtpToken = require('../models/otp.model');
-const User = require('../models/users.model');
-const { sendOtpEmail } = require('../Services/email.service');
+const OtpToken = require('../models/Otp.model');
+const User = require('../models/User.model');
+const { sendOtpEmail } = require('../Services/Email.service');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const otpService = require('../Services/otp.service');
+const otpService = require('../Services/Otp.service');
 
 const requestOtp = async (req, res) => {
   try {

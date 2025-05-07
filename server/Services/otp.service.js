@@ -1,4 +1,4 @@
-const OtpModel = require('../models/otp.model');
+const OtpModel = require('../models/Otp.model');
 
 class OtpService {
   generateOtp() {

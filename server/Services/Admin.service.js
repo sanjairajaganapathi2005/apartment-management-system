@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const AdminModel = require('../models/Admin.model');
-const OwnerMOdel = require('../models/owner');
+const OwnerMOdel = require('../models/Owner.model');
 
 class AdminService {
     async adminLogin(email, password) {

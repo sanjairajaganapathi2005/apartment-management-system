@@ -1,4 +1,4 @@
-const usersService = require('../services/users.service');
+const usersService = require('../Services/User.service');
 const userValidator = require('../validators/user.validator');
 
 // REGISTER USER
