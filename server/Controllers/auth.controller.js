@@ -3,19 +3,22 @@ const User = require('../models/users.model');
 const { sendOtpEmail } = require('../Services/email.service');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const otpService = require('../Services/otp.service');
 
-// 📌 Request OTP for Registration
 const requestOtp = async (req, res) => {
-  const { email } = req.body;
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  try {
+    const { email } = req.body;
+    const { otp, id } = await otpService.genOtp(email, "register");
 
-  await OtpToken.create({ email, otp });
-  await sendOtpEmail(email, otp);
+    await sendOtpEmail(email, otp);
 
-  res.status(200).json({ message: 'OTP sent to email' });
+    res.status(200).json({ message: "OTP sent", id });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-// 📌 Verify OTP and Register User
+
 const registerUser = async (req, res) => {
   const { email, otp, password, role, referenceId } = req.body;
 
@@ -30,7 +33,6 @@ const registerUser = async (req, res) => {
   res.status(201).json({ message: 'User registered successfully' });
 };
 
-// 📌 Login
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -43,31 +45,31 @@ const loginUser = async (req, res) => {
   const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
     expiresIn: '1d',
   });
-
   res.status(200).json({ token, user });
 };
 
-// 📌 Request Reset Password (OTP)
+
 const requestResetPassword = async (req, res) => {
-  const { email } = req.body;
+  try {
+    const { email } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user) return res.status(404).json({ message: 'Email not found' });
-
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  await OtpToken.create({ email, otp });
-  await sendOtpEmail(email, otp);
-
-  res.status(200).json({ message: 'Reset OTP sent to email' });
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'Email not found' });
+    const { otp, id } = await otpService.genOtp(email, "reset");
+    await sendOtpEmail(email, otp);
+    res.status(200).json({ message: 'Reset OTP sent', email });
+    res.status(200).json({ message: 'Reset OTP sent to email' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+    
+  }
 };
 
-// 📌 Reset Password with OTP
 const resetPassword = async (req, res) => {
   const { email, otp, newPassword } = req.body;
 
   const token = await OtpToken.findOne({ email, otp });
   if (!token) return res.status(400).json({ message: 'Invalid or expired OTP' });
-
   const hashedPassword = await bcrypt.hash(newPassword, 10);
   await User.findOneAndUpdate({ email }, { password: hashedPassword });
   await OtpToken.deleteMany({ email });

@@ -5,19 +5,16 @@ const {
     requestOtp,
     requestResetPassword,
     resetPassword,
-} = require('../controllers/auth.controller');
+} = require('../Controllers/auth.controller');
 
 const authRouter = express.Router();
 
-// 📌 Authentication Routes
-authRouter.post('/register', registerUser);         // Registration using verified OTP
-authRouter.post('/login', loginUser);               // Login with email/password
+
+authRouter.post('/register', registerUser);         
+authRouter.post('/login', loginUser);              
 
 // 📌 OTP Handling
-authRouter.post('/request-otp', requestOtp);        // Request OTP for registration
-
-// 📌 Password Reset Flow
-authRouter.post('/request-reset-password', requestResetPassword); // Send OTP to reset password
-authRouter.put('/reset-password', resetPassword);                 // Reset password with verified OTP
-
+authRouter.post('/request-otp', requestOtp);        
+authRouter.post('/request-reset-password', requestResetPassword); 
+authRouter.put('/reset-password', resetPassword);                 
 module.exports = authRouter;

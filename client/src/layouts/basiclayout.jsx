@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-class AppRoutes extends Component {
+class basiclayout extends Component {
     render() {
         return (
             <div>
+                <h1>Basic Layout</h1>
                 
             </div>
         );
     }
 }
 
-export default AppRoutes;
+export default basiclayout;
