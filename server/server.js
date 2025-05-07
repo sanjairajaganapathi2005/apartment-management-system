@@ -1,14 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
-// MongoDB connection
-const connectDb = require("./Config/db.config");
+const connectDb = require("./Config/db.config"); // MongoDB connection
 
 // Routes
 const tenantRoutes = require('./routes/Tenant.route');
 const complaintRoutes = require('./routes/Complaint.route');
-const authRoutes = require('./routes/Auth.route'); 
+const authRoutes = require('./routes/Auth.route');
+const ownerRoutes = require('./routes/Owner.route');
+const tenantRoutes = require('./routes/Tenant.route'); 
 const employeeRoutes = require('./routes/Employee.route'); 
 const userRouter = require('./routes/User.route');
 const adminRoutes = require('./routes/Admin.route');
@@ -30,7 +30,7 @@ app.use("/auth", authRoutes);
 app.use("/employee", employeeRoutes); 
 app.use("/auth", userRouter); 
 app.use("/admin", adminRoutes);
-
+app.use("/tenant", tenantRoutes); 
 
 // Default Route
 app.get("/", (req, res) => {
