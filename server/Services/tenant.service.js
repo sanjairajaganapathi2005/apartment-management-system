@@ -75,7 +75,7 @@ const deleteTenant = async (req, res) => {
 };
 
 module.exports = {
-  addTenant,
+  createTenantByOwner,
   getAllTenants,
   updateTenant,
   deleteTenant

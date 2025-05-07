@@ -1,17 +1,11 @@
-// login
-// owner regiater
-// get tenant details
-// get owner details
-// compains
-// parking allocations
-// empolyees
+// owner register,update,delete
+// complaints
+
 
 const express = require('express');
 const adminRouter = express.Router();
-const { adminLogin, registerAdmin , registerOwner} = require('../Controller/Admin.controller');
+const { adminLogin, registerAdmin , registerOwner} = require('../Controllers/Admin.controller');
 
-adminRouter.post('/login', adminLogin);
-adminRouter.post('/register', registerAdmin);
 adminRouter.post('/registerowner', registerOwner);
 
 module.exports = adminRouter;

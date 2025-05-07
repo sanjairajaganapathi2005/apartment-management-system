@@ -6,7 +6,7 @@ require("dotenv").config();
 const connectDb = require("./Config/db.config");
 
 // Routes
-const ownerRoutes = require('./routes/Owner.route');
+const ownerRoutes = require('./routes/tenant.route');
 const complaintRoutes = require('./routes/Complaint.route');
 const authRoutes = require('./routes/Auth.route'); // ✅ Auth route added
 
