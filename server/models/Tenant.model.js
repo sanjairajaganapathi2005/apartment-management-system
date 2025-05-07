@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const TenantSchema = new mongoose.Schema({
   tenantId: { type: String, required: true, unique: true },
   name: { type: String, required: true },
+  email: {type: String, required:true, unique:true, ref: 'User'},
   dob: { type: Date, required: true },
   adhaar: { type: String, required: true, unique: true },
   agreement: { type: String, required: true }, // Assuming this stores agreement details or a file reference

@@ -1,4 +1,4 @@
-const AdminService = require('../Service/Admin.service');
+const AdminService = require('../Services/Admin.service');
 
 exports.adminLogin = async (req, res) => {
     try {
